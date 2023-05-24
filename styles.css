@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+#wrapper{
+    height:100vh;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.container{
+    height:100%;
+    max-width:1200px;  /*  Width could also have been used instead of max-width ( my view: don't know about responseiveness */
+    margin:0 auto;     /* With margin set to 0 and auto the container is brought at the center of the webpage (Note: In this project it may seem that when we apply this property the image and the text might not have been centered but actually the container has been centered and it's items are in the left of the container and his text and images can be centered again inside the container */
+    padding:20px;
+}
+
+.container h1{
+    margin:20px 100px;
+    text-align:center;
+    margin-bottom:20px;  /* margin:20px 0; means that we want 20px margin at bottom and top and 0px at left and right . So again specifying that we want bottom margin to be set to 20px will override the previous value and will have the same effect */
+    font-size:3rem;
+}
+
+.gallery{       /* We have used flex for gallery because we have observed that the images were placed side-by-side and had some gap between them so inorder to give spaces between them easily we have used diplay:flex property to gallery container */
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+}
+
+.card{
+    width:32%;   /* Here we have set only width but not height then how height is set?? ( I Know answer )   When we set the width of the card to 32% height card will ascquire the 32% of the parent element width and as the height is not set it is free or we can say it depends on the height of the content inside the card (Rest is inside the notes A4 sheet) */
+    position:relative;
+    margin-bottom:20px;
+    border-radius: 10px;
+    overflow:hidden;
+}
+
+.card img{
+    width:100%;
+    height:100%; /* Before adding height=100%; we can observe that the displayed images didn't had round corners at the bottom of the image even though we had declared that we want to have rounded corners in the .cards class . Actually card's corners was rounded all round but images were overlapping on the cards and these images did't had corners set to round , so we were not able to see the difference . Once we got hold of img in card and pointed it as .card img{} and said that fit in the width and height of the cards then after fitting we were able to see the diffence correctly (i.e the corners of the images fit inside the cards were having rounded corners) */
+    filter:grayscale(100%);  /* Applied grayscale() to img not the .card itself because card is seperate and image applied on it is different so if grayscale() filter is applied to the card then it would be applied but as img is over it then the img would have covered it and that would have not been visible */
+    box-shadow:0 0 20px #333;
+    object-fit:cover;
+}
+
+.card:hover{
+    transform:scale(1.03);
+    transition:0.5s;
+    filter:drop-shadow(0 0 10px #333);  /* Actually there is difference between filter:drop-shadow() and box-shadow . The same can be achived by box-shadow also but with some changes in the values of spred-radius and blur effect */
+}
+
+.card:hover img{      /* Here we have used .card:hover img {} which actually means that whenever the card is hovered , element with img tag has to have the hover specified features ( NOTE : card includes image + img caption ) . ( If we had used .card img:hover{} then it actually means that element with img tag only inside card has to have the specified properties in hovered condition so as a result when we were hovering near or on img caption the hovered specified property was not taking place , this is because we have said that hovered condition is only for element with img tag ( NOTE : In card image may seem to be full of card but img caption is overlapped on this image so now in reality there is 75% image and 25% img caption ) so as a result when the cursor is hovered on the 25% of card below i.e, onto img caption then the the image was not getting back the original color as specified in hovered condition */
+    filter:grayscale(0%); /* grayscale(0 was applied to the img so inorder to remove the filter we should point to the img only so it hs been written over here */
+} 
+
+.card figcaption{
+    position:absolute;
+    bottom:0;
+    left:0;
+    padding:25px;  /* Without padding the figcaption was at the starting side of the image and 'i' was not visible from text in figcaption */
+    width:100%;  /* We are saying that take the 10% width of the parent element (i.e, parent is card so card's 100% )  */
+    height:20%;
+    font-size:16px;
+    font-weight:500;
+    color:#fff;
+    opacity:0;  /* We know that text is somewhere overlapped below images so that is why it is visible to us , so by setting opacity  value to 1 it becomes visible to us and with it's value set to 0 it is not visible to us . As we are not dealing with 3d and all so wee can't bring the text above using z-index value */
+    border-radius:0 0 10px 10px;
+    background:linear-gradient(0deg, rgba(0,0,0,0.5) 0%,rgba(255,255,255,0)100%);  /* linear gradient is from bottom to top */
+    transition:0.5s;  /* We are setting background:linear-gradient()  transition for the gradient effect in figcaption because as the text is displayed on the image , but the image is tansiting at a speed of 1.03s so to match the effect of transition of card of zooming we have set the gradient transition speed to 1.03s */
+}
+
+.card:hover figcaption{
+    opacity:1;
+    transform:scale(1.03);  /* We are setting the figcaption to be scaled at 1.03s beacuse the text is being displayed on the image so when the imamge is zoomed the text also zooming have a good effect . So the scale() effeect is set */
+}
